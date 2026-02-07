@@ -1,0 +1,5 @@
+package com.example.tcc_gym_admin_front
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
