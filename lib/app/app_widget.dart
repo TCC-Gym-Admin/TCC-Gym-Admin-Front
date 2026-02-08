@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tcc_gym_admin_front/feature/home/page/home_page.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AppWidget extends StatelessWidget {
+  const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: ThemeData(),
+      routerConfig: Modular.routerConfig,
+      debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        return MediaQuery(data: MediaQuery.of(context), child: child!);
+      },
     );
   }
 }
