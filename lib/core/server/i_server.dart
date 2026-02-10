@@ -16,5 +16,5 @@ abstract class IServer {
 
   Future<ServerResponse> put(String path, {dynamic data});
 
-  Future<ServerResponse> delete(String path, {Object data});
+  Future<ServerResponse> delete(String path, {Object? data});
 }
