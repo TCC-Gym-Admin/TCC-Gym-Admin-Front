@@ -15,6 +15,7 @@ dependencies:
   flutter_modular: ^6.4.1
   flutter_bloc: ^9.1.1
   equatable: ^2.0.8
+  dio: ^5.9.1
 
 dev_dependencies:
   flutter_test:
