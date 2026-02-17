@@ -10,6 +10,6 @@ class EmployeesPage extends StatefulWidget {
 class _EmployeesPageState extends State<EmployeesPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.grey);
+    return Scaffold(body: Container());
   }
 }

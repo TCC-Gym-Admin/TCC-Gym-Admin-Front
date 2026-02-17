@@ -10,6 +10,6 @@ class PaymentsPage extends StatefulWidget {
 class _PaymentsPageState extends State<PaymentsPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.black);
+    return Scaffold(body: Container());
   }
 }

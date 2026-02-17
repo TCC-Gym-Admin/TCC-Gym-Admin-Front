@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:tcc_gym_admin_front/core/widget/liquid_glass.dart';
 import 'package:tcc_gym_admin_front/feature/home/cubit/home_cubit.dart';
 import 'package:tcc_gym_admin_front/feature/home/cubit/home_state.dart';
 import 'package:tcc_gym_admin_front/feature/home/widgets/nav_bar/animated_indicator.dart';
+import 'package:tcc_gym_admin_front/feature/home/widgets/nav_bar/background_toggle.dart';
 import 'package:tcc_gym_admin_front/feature/home/widgets/nav_bar/bottom_nav_bar.dart';
 
 class HomeNavBar extends StatelessWidget {
@@ -35,7 +35,7 @@ class HomeNavBar extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    liquidGlass(child: SizedBox(height: 60, width: navWidth)),
+                    BackgroundToggle(navWidth: navWidth),
                     AnimatedIndicator(
                       selectedIndex: selectedIndex,
                       navWidth: navWidth,
@@ -47,12 +47,14 @@ class HomeNavBar extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           BottomNavBar(
+                            selectedIndex: selectedIndex,
                             icon: Icons.person,
                             index: 0,
                             onTabSelected: onTabSelected,
                             label: "Funcionários",
                           ),
                           BottomNavBar(
+                            selectedIndex: selectedIndex,
                             index: 1,
                             icon: Icons.attach_money_rounded,
                             onTabSelected: onTabSelected,

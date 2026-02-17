@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tcc_gym_admin_front/core/widget/liquid_glass.dart';
+import 'package:tcc_gym_admin_front/core/theme/app_colors.dart';
 
 class AnimatedIndicator extends StatelessWidget {
   const AnimatedIndicator({
@@ -21,11 +21,12 @@ class AnimatedIndicator extends StatelessWidget {
       left: selectedIndex == 0
           ? (navWidth / 4) - (indicatorWidth / 2)
           : (navWidth * 3 / 4) - (indicatorWidth / 2),
-      child: liquidGlass(
-        child: Container(
-          height: 50,
-          width: indicatorWidth,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      child: Container(
+        height: 50,
+        width: indicatorWidth,
+        decoration: BoxDecoration(
+          color: AppColors.buttonColor,
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
