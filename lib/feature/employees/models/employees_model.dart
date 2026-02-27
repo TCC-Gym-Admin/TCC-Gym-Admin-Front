@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class EmployeesModel extends Equatable {
@@ -8,8 +6,8 @@ class EmployeesModel extends Equatable {
   final String? role;
   final String? document;
   final String? address;
-  final String? salary;
-  EmployeesModel({
+  final double? salary;
+  const EmployeesModel({
     this.fullname,
     this.age,
     this.role,
@@ -24,7 +22,7 @@ class EmployeesModel extends Equatable {
     String? role,
     String? document,
     String? address,
-    String? salary,
+    double? salary,
   }) {
     return EmployeesModel(
       fullname: fullname ?? this.fullname,
@@ -41,23 +39,23 @@ class EmployeesModel extends Equatable {
 
   factory EmployeesModel.fromJson(Map<String, dynamic> map) {
     return EmployeesModel(
-      fullname: map['nomeCompleto'],
-      age: map['idade'],
-      role: map['cargo'],
-      document: map['cpf'],
-      address: map['endereco'],
-      salary: map['salario'],
+      fullname: map['fullName'],
+      age: map['age'],
+      role: map['position'],
+      document: map['identificationNumber'],
+      address: map['address'],
+      salary: map['salary'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "nomeCompleto": fullname,
-      "idade": age,
-      "cargo": role,
-      "cpf": document,
-      "salario": salary,
-      "endereco": address,
+      "fullName": fullname,
+      "age": age,
+      "position": role,
+      "identificationNumber": document,
+      "salary": salary,
+      "address": address,
     };
   }
 }

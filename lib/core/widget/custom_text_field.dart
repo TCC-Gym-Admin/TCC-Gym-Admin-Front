@@ -37,6 +37,7 @@ class CustomTextField extends StatelessWidget {
             ],
           ),
         TextFormField(
+          controller: controller,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
           style: TextStyle(color: AppColors.primaryTextColor),
