@@ -10,6 +10,7 @@ class FontWeightBuilder {
   final FontWeight weight;
   FontWeightBuilder(this.weight);
 
+  TextStyle get veryVerysmall => _style(9);
   TextStyle get small => _style(15);
   TextStyle get medium => _style(20);
   TextStyle get large => _style(25);

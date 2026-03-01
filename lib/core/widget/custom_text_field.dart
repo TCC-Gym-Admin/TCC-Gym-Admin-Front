@@ -5,15 +5,18 @@ import 'package:tcc_gym_admin_front/core/theme/app_colors.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
+  final String? error;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
-
+  final ValueChanged<String>? onChange;
   const CustomTextField({
     super.key,
     this.controller,
     this.label,
     this.keyboardType,
     this.inputFormatters,
+    this.error,
+    this.onChange,
   });
 
   @override
@@ -37,11 +40,13 @@ class CustomTextField extends StatelessWidget {
             ],
           ),
         TextFormField(
+          onChanged: onChange,
           controller: controller,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
           style: TextStyle(color: AppColors.primaryTextColor),
           decoration: InputDecoration(
+            errorText: error,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),

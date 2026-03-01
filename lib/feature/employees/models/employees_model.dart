@@ -52,7 +52,7 @@ class EmployeesModel extends Equatable {
     return {
       "fullName": fullname,
       "age": age,
-      "position": role,
+      "position": "PERSONAL_TRAINER",
       "identificationNumber": document,
       "salary": salary,
       "address": address,

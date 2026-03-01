@@ -12,11 +12,12 @@ class ServerDio implements IServer {
   factory ServerDio() => _intance;
 
   late Dio dio;
+  static const String baseUrl = String.fromEnvironment("BASE_URL");
 
   ServerDio._internal() {
     dio = Dio(
       BaseOptions(
-        baseUrl: '',
+        baseUrl: getBaseURL(),
         connectTimeout: Duration(minutes: 2),
         headers: {
           'Content-Type': 'application/json',
@@ -39,6 +40,10 @@ class ServerDio implements IServer {
         },
       ),
     );
+  }
+
+  String getBaseURL() {
+    return baseUrl;
   }
 
   @override

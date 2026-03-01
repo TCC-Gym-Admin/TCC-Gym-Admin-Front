@@ -20,8 +20,8 @@ class HomeNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double navWidth = 180;
-    const double indicatorWidth = 80;
+    const double navWidth = 200;
+    const double indicatorWidth = 90;
 
     return SafeArea(
       child: BlocBuilder<HomeCubit, HomeState>(
@@ -42,7 +42,7 @@ class HomeNavBar extends StatelessWidget {
                       indicatorWidth: indicatorWidth,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

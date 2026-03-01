@@ -11,11 +11,11 @@ class EmployeesState extends Equatable {
 
   EmployeesState copyWith({EmployeesModel? employee, EmployeesStatus? status}) {
     return EmployeesState(
-      employee: this.employee ?? employee,
-      status: this.status,
+      employee: employee ?? this.employee,
+      status: status ?? this.status,
     );
   }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [employee, status];
 }

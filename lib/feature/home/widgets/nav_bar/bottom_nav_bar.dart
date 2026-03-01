@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcc_gym_admin_front/core/theme/app_colors.dart';
+import 'package:tcc_gym_admin_front/core/theme/app_text_style.dart';
 
 class BottomNavBar extends StatelessWidget {
   final Function(int) onTabSelected;
@@ -25,7 +26,7 @@ class BottomNavBar extends StatelessWidget {
         child: Container(
           color: Colors.transparent,
           height: 55,
-          width: 55,
+          width: 75,
           child: Column(
             mainAxisAlignment: .center,
             children: [
@@ -35,6 +36,14 @@ class BottomNavBar extends StatelessWidget {
                 color: selectedIndex == index
                     ? AppColors.buttonSecundaryColor
                     : AppColors.buttonColor,
+              ),
+              Text(
+                label.toUpperCase(),
+                style: AppTextStyle.bold.veryVerysmall.copyWith(
+                  color: selectedIndex == index
+                      ? AppColors.background
+                      : AppColors.buttonColor,
+                ),
               ),
             ],
           ),

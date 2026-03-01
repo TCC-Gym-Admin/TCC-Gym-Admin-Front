@@ -1,4 +1,5 @@
 import 'package:result_dart/result_dart.dart';
+import 'package:tcc_gym_admin_front/core/model/app_failure.dart';
 import 'package:tcc_gym_admin_front/core/server/i_server.dart';
 import 'package:tcc_gym_admin_front/feature/employees/models/employees_model.dart';
 import 'package:tcc_gym_admin_front/feature/employees/services/interfaces/i_employees.dart';
@@ -9,7 +10,7 @@ class EmployeesServices extends IEmployees {
   EmployeesServices({required this.server});
 
   @override
-  Future<ResultDart<EmployeesModel, String>> register(
+  Future<ResultDart<EmployeesModel, AppFailure>> register(
     EmployeesModel employees,
   ) async {
     try {
@@ -18,7 +19,7 @@ class EmployeesServices extends IEmployees {
 
       return Success(result);
     } catch (e) {
-      return Failure('');
+      return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
     }
   }
 }
