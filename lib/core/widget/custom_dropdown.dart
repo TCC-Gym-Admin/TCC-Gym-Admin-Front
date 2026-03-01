@@ -38,6 +38,10 @@ class CustomStringDropdown extends StatelessWidget {
           ),
         DropdownButtonFormField<String>(
           initialValue: value,
+          hint: Text(
+            'Selecione um cargo',
+            style: TextStyle(color: AppColors.primaryTextColor.withAlpha(80)),
+          ),
           style: const TextStyle(color: Colors.black, fontSize: 16),
           decoration: InputDecoration(
             focusColor: AppColors.inputColors,
