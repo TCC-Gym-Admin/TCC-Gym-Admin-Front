@@ -14,7 +14,7 @@ class CpfInputFormatter extends TextInputFormatter {
       cleanText = cleanText.substring(0, 11);
     }
 
-    String formattedText = _formatCpf(cleanText);
+    String formattedText = formatCpf(cleanText);
 
     int cursorPosition = _calculateCursorPosition(newValue, formattedText);
 
@@ -24,7 +24,7 @@ class CpfInputFormatter extends TextInputFormatter {
     );
   }
 
-  String _formatCpf(String text) {
+  String formatCpf(String text) {
     if (text.length <= 3) return text;
     if (text.length <= 6) {
       return '${text.substring(0, 3)}.${text.substring(3)}';

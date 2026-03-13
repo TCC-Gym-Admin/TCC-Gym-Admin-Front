@@ -22,4 +22,16 @@ class EmployeesServices extends IEmployees {
       return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
     }
   }
+
+  @override
+  Future<ResultDart<EmployeesModel, AppFailure>> getEmployees() async {
+    try {
+      final response = await server.get('/employee');
+      final result = EmployeesModel.fromJson(response.data);
+
+      return Success(result);
+    } catch (e) {
+      return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
+    }
+  }
 }

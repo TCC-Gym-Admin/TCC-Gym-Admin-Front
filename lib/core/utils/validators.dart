@@ -38,6 +38,16 @@ bool validateDocument(String? document) {
   return true;
 }
 
+String employeePosition(String value) {
+  switch (value) {
+    case 'PERSONAL_TRAINER':
+      return 'Personal Trainer';
+
+    default:
+      return '';
+  }
+}
+
 bool validateFullName(String? name) {
   if (name == null) return false;
 
