@@ -42,6 +42,10 @@ String employeePosition(String value) {
   switch (value) {
     case 'PERSONAL_TRAINER':
       return 'Personal Trainer';
+    case 'TEACHER':
+      return 'Professor';
+    case 'RECEPTIONIST':
+      return 'Recepcionista';
 
     default:
       return '';

@@ -51,9 +51,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
           itemCount: state.employee.length,
           itemBuilder: (context, index) {
             return SwipeCard(
-              onDismissed: () {
-                print('object');
-              },
+              onDismissed: () {},
               keyIndex: state.employee[index].document.toString(),
               child: Container(
                 height: 180,

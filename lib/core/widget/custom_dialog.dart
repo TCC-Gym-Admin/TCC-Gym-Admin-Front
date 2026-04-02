@@ -47,7 +47,6 @@ class CustomDialog {
     required String message,
   }) {
     return showDialog(
-      barrierDismissible: false,
       context: context,
       builder: (_) {
         return Dialog(

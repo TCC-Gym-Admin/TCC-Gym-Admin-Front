@@ -14,6 +14,7 @@ import 'package:tcc_gym_admin_front/core/widget/custom_text_field.dart';
 import 'package:tcc_gym_admin_front/feature/employees/cubit/employees_cubit.dart';
 import 'package:tcc_gym_admin_front/feature/employees/cubit/employees_state.dart';
 import 'package:tcc_gym_admin_front/feature/employees/models/employees_model.dart';
+import 'package:tcc_gym_admin_front/feature/home/cubit/home_cubit.dart';
 
 class EmployeesRegisterForm extends StatefulWidget {
   const EmployeesRegisterForm({super.key});
@@ -24,6 +25,7 @@ class EmployeesRegisterForm extends StatefulWidget {
 
 class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
   final employeeCubit = Modular.get<EmployeesCubit>();
+  final cubit = Modular.get<HomeCubit>();
 
   String? errorName;
   String? errorDocument;
@@ -38,7 +40,7 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
       age: int.parse(age.text),
       document: CustomCleanFormatter.cleanDocument(document.text),
       fullname: fullname.text,
-      role: selectedRole,
+      role: employeeCubit.selectPosition(selectedRole),
       salary: CustomCleanFormatter.cleanMoney(salary.text),
     );
     employeeCubit.updateEmployee(employee);
@@ -54,15 +56,13 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
       Future.delayed(Duration(seconds: 2)).then((value) {
         Modular.to.pop();
         Modular.to.pop();
+        cubit.getEmployees();
       });
     } else {
       CustomDialog.showFailure(
         context,
         message: 'Algo de errado aconteceu! Verifique todos os campos',
       );
-      Future.delayed(Duration(seconds: 2)).then((value) {
-        Modular.to.pop();
-      });
     }
   }
 
