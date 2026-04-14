@@ -1,7 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:tcc_gym_admin_front/feature/employees/models/employees_model.dart';
 
-enum HomeStatus { initial, loading, success, failure }
+enum HomeStatus {
+  initial,
+  loading,
+  success,
+  failure,
+  deleteSuccess,
+  deleteFailure,
+}
 
 class HomeState extends Equatable {
   final int selectedIndex;

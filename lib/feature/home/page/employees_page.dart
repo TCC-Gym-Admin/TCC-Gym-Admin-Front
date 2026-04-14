@@ -50,8 +50,11 @@ class _EmployeesPageState extends State<EmployeesPage> {
           separatorBuilder: (context, index) => SizedBox(height: 20),
           itemCount: state.employee.length,
           itemBuilder: (context, index) {
+            final employee = state.employee[index];
             return SwipeCard(
-              onDismissed: () {},
+              onDismissed: () async {
+                await cubit.deleteEmployees(employee.id.toString());
+              },
               keyIndex: state.employee[index].document.toString(),
               child: Container(
                 height: 180,

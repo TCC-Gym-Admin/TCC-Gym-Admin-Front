@@ -24,4 +24,28 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
   }
+
+  removeItem(String id) {
+    state.employee.removeWhere((item) => item.id == id);
+    emit(
+      state.copyWith(
+        employee: state.employee,
+        status: HomeStatus.deleteSuccess,
+      ),
+    );
+  }
+
+  Future<void> deleteEmployees(String id) async {
+    final result = await services.deleteEmployees(id);
+
+    result.fold(
+      (success) {
+        removeItem(id);
+        emit(state.copyWith(status: HomeStatus.deleteSuccess));
+      },
+      (failure) {
+        emit(state.copyWith(status: HomeStatus.deleteFailure));
+      },
+    );
+  }
 }

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class EmployeesModel extends Equatable {
   final String? fullname;
+  final String? id;
   final int? age;
   final String? role;
   final String? document;
@@ -14,6 +15,7 @@ class EmployeesModel extends Equatable {
     this.document,
     this.address,
     this.salary,
+    this.id,
   });
 
   EmployeesModel copyWith({
@@ -22,10 +24,12 @@ class EmployeesModel extends Equatable {
     String? role,
     String? document,
     String? address,
+    String? id,
     double? salary,
   }) {
     return EmployeesModel(
       fullname: fullname ?? this.fullname,
+      id: id ?? this.id,
       age: age ?? this.age,
       role: role ?? this.role,
       document: document ?? this.document,
@@ -35,7 +39,15 @@ class EmployeesModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [fullname, age, role, document, address, salary];
+  List<Object?> get props => [
+    fullname,
+    age,
+    role,
+    document,
+    address,
+    salary,
+    id,
+  ];
 
   factory EmployeesModel.fromJson(Map<String, dynamic> map) {
     return EmployeesModel(
@@ -45,6 +57,7 @@ class EmployeesModel extends Equatable {
       document: map['identificationNumber'],
       address: map['address'],
       salary: map['salary'],
+      id: map['id'],
     );
   }
 

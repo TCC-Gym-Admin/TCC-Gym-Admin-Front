@@ -31,8 +31,8 @@ class _SwipeCardState extends State<SwipeCard>
             child: Padding(
               padding: const EdgeInsets.only(left: 60.0),
               child: InkWell(
-                onTap: () async {
-                  await widget.onDismissed();
+                onTap: () {
+                  widget.onDismissed();
                   controller.close();
                 },
                 child: Container(

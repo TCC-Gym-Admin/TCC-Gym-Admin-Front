@@ -25,4 +25,15 @@ class HomeServices extends IHomeServices {
       return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
     }
   }
+
+  @override
+  Future<ResultDart<String, AppFailure>> deleteEmployees(String id) async {
+    try {
+      final response = await server.delete('/employee/$id');
+
+      return Success('');
+    } catch (e) {
+      return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
+    }
+  }
 }
