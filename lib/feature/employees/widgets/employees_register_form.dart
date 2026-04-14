@@ -58,7 +58,10 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
       age.text = widget.employee!.age.toString();
       address.text = widget.employee!.address ?? '';
       salary.text = widget.employee!.salary.toString();
-      selectedRole = widget.employee!.role;
+      selectedRole = employeeCubit.positions.firstWhere(
+        (e) => employeeCubit.selectPosition(e) == widget.employee!.role,
+        orElse: () => '',
+      );
     }
   }
 

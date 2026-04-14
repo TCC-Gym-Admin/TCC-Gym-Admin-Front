@@ -54,14 +54,16 @@ class _EmployeesPageState extends State<EmployeesPage> {
             final employee = state.employee[index];
             return GestureDetector(
               onTap: () {
-                final employee = EmployeesModel(
-                  address: 'aaaa',
-                  age: 14,
-                  document: '1112223334447',
-                  fullname: 'Luizinho',
-                  salary: 3.7000,
+                final model = EmployeesModel(
+                  address: employee.address,
+                  age: employee.age,
+                  document: employee.document,
+                  fullname: employee.fullname,
+                  salary: employee.salary,
+                  role: employee.role,
+                  id: employee.id,
                 );
-                Modular.to.pushNamed('/employees', arguments: employee);
+                Modular.to.pushNamed('/employees', arguments: model);
               },
               child: SwipeCard(
                 onDismissed: () async {
