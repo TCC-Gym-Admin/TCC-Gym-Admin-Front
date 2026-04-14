@@ -6,6 +6,7 @@ enum HomeStatus {
   loading,
   success,
   failure,
+  loadingDelete,
   deleteSuccess,
   deleteFailure,
 }
