@@ -23,7 +23,7 @@ class EmployeesModule extends Module {
     r.child(
       Modular.initialRoute,
       child: (context) =>
-          EmployeesRegister(employee: Modular.args.data as EmployeesModel),
+          EmployeesRegister(employee: Modular.args.data as EmployeesModel?),
     );
   }
 }

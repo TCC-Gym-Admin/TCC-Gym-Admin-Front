@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:result_dart/result_dart.dart';
 import 'package:tcc_gym_admin_front/core/model/app_failure.dart';
 import 'package:tcc_gym_admin_front/core/server/i_server.dart';
@@ -18,6 +20,20 @@ class EmployeesServices extends IEmployees {
       final result = EmployeesModel.fromJson(response.data);
 
       return Success(result);
+    } catch (e) {
+      return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
+    }
+  }
+
+  @override
+  Future<ResultDart<String, AppFailure>> edit(EmployeesModel employees) async {
+    try {
+      final response = await server.put(
+        '/employee/${employees.id}',
+        data: employees.toJson(),
+      );
+
+      return Success('');
     } catch (e) {
       return Failure(AppFailure(message: "Erro inesperado", statusCode: 400));
     }

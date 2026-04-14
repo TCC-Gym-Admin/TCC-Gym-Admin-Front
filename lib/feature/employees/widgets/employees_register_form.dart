@@ -83,7 +83,7 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
     bool result;
 
     if (isEditing) {
-      result = await employeeCubit.registerEmployee();
+      result = await employeeCubit.editEmployee();
     } else {
       result = await employeeCubit.registerEmployee();
     }

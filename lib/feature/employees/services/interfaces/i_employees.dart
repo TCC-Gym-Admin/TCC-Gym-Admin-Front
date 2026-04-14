@@ -6,5 +6,6 @@ abstract class IEmployees {
   Future<ResultDart<EmployeesModel, AppFailure>> register(
     EmployeesModel employees,
   );
+  Future<ResultDart<String, AppFailure>> edit(EmployeesModel employees);
   Future<ResultDart<EmployeesModel, AppFailure>> getEmployees();
 }

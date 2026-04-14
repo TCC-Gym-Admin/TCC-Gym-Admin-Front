@@ -27,6 +27,24 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     );
   }
 
+  Future<bool> editEmployee() async {
+    emit(state.copyWith(status: EmployeesStatus.loading));
+
+    final response = await services.edit(state.employee!);
+
+    return response.fold(
+      (success) {
+        emit(state.copyWith(status: EmployeesStatus.success));
+
+        return true;
+      },
+      (error) {
+        emit(state.copyWith(status: EmployeesStatus.error));
+        return false;
+      },
+    );
+  }
+
   String selectPosition(String? position) {
     switch (position) {
       case "Professor":
