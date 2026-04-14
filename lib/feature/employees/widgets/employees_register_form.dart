@@ -17,7 +17,9 @@ import 'package:tcc_gym_admin_front/feature/employees/models/employees_model.dar
 import 'package:tcc_gym_admin_front/feature/home/cubit/home_cubit.dart';
 
 class EmployeesRegisterForm extends StatefulWidget {
-  const EmployeesRegisterForm({super.key});
+  final EmployeesModel? employee;
+
+  const EmployeesRegisterForm({this.employee, super.key});
 
   @override
   State<EmployeesRegisterForm> createState() => _EmployeesRegisterFormState();
@@ -27,15 +29,42 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
   final employeeCubit = Modular.get<EmployeesCubit>();
   final cubit = Modular.get<HomeCubit>();
 
+  bool get isEditing => widget.employee != null;
+
   String? errorName;
   String? errorDocument;
   String? errorAge;
   String? errorRole;
   String? errorAddress;
   String? errorSalary;
+
   bool isValid = true;
-  setModel() {
+
+  final TextEditingController fullname = TextEditingController();
+  final TextEditingController document = TextEditingController();
+  final TextEditingController age = TextEditingController();
+  final TextEditingController address = TextEditingController();
+  final TextEditingController salary = TextEditingController();
+
+  String? selectedRole;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (isEditing) {
+      fullname.text = widget.employee!.fullname ?? '';
+      document.text = widget.employee!.document ?? '';
+      age.text = widget.employee!.age.toString();
+      address.text = widget.employee!.address ?? '';
+      salary.text = widget.employee!.salary.toString();
+      selectedRole = widget.employee!.role;
+    }
+  }
+
+  void setModel() {
     final employee = EmployeesModel(
+      id: widget.employee?.id,
       address: address.text,
       age: int.parse(age.text),
       document: CustomCleanFormatter.cleanDocument(document.text),
@@ -43,17 +72,28 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
       role: employeeCubit.selectPosition(selectedRole),
       salary: CustomCleanFormatter.cleanMoney(salary.text),
     );
+
     employeeCubit.updateEmployee(employee);
   }
 
-  void registerEmployee() async {
-    final result = await employeeCubit.registerEmployee();
+  void saveEmployee() async {
+    bool result;
+
+    if (isEditing) {
+      result = await employeeCubit.registerEmployee();
+    } else {
+      result = await employeeCubit.registerEmployee();
+    }
+
     if (result) {
       CustomDialog.showSuccess(
         context,
-        message: 'Funcionário foi criado com sucesso!',
+        message: isEditing
+            ? 'Funcionário atualizado com sucesso!'
+            : 'Funcionário criado com sucesso!',
       );
-      Future.delayed(Duration(seconds: 2)).then((value) {
+
+      Future.delayed(const Duration(seconds: 2)).then((value) {
         Modular.to.pop();
         Modular.to.pop();
         cubit.getEmployees();
@@ -66,47 +106,49 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
     }
   }
 
-  validatedForm() {
+  void validatedForm() {
+    isValid = true;
+
     errorName = null;
     errorDocument = null;
     errorAge = null;
     errorRole = null;
     errorAddress = null;
     errorSalary = null;
+
     if (!validateFullName(fullname.text)) {
       isValid = false;
       errorName = 'Campo nome é obrigatório';
     }
+
     if (address.text.isEmpty) {
       isValid = false;
       errorAddress = 'Campo endereço é obrigatório';
     }
+
     if (age.text.isEmpty) {
       isValid = false;
       errorAge = 'Campo idade é obrigatório';
     }
+
     if (!validateDocument(document.text)) {
       isValid = false;
       errorDocument = 'Campo CPF é obrigatório';
     }
+
     if (selectedRole == null || selectedRole == '') {
       isValid = false;
       errorRole = 'Campo Cargo é obrigatório';
     }
+
     if (salary.text.isEmpty) {
       isValid = false;
       errorSalary = 'Campo salário é obrigatório';
     }
-    isValid = true;
+
     setState(() {});
   }
 
-  final TextEditingController fullname = TextEditingController();
-  final TextEditingController document = TextEditingController();
-  final TextEditingController age = TextEditingController();
-  String? selectedRole;
-  final TextEditingController address = TextEditingController();
-  final TextEditingController salary = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EmployeesCubit, EmployeesState>(
@@ -121,82 +163,68 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
                   controller: fullname,
                   label: "Nome Completo",
                   error: errorName,
-                  onChange: (c) {
-                    validatedForm();
-                  },
+                  onChange: (_) => validatedForm(),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomTextField(
                   label: "Cpf",
                   controller: document,
                   keyboardType: TextInputType.number,
                   inputFormatters: [CpfInputFormatter()],
                   error: errorDocument,
-                  onChange: (c) {
-                    validatedForm();
-                  },
+                  onChange: (_) => validatedForm(),
                 ),
-                SizedBox(height: 20),
-                SizedBox(
-                  child: Row(
-                    mainAxisSize: .max,
-                    children: [
-                      Expanded(
-                        child: CustomTextField(
-                          controller: age,
-                          label: "Idade",
-                          keyboardType: TextInputType.number,
-                          error: errorAge,
-                          onChange: (c) {
-                            validatedForm();
-                          },
-                        ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        controller: age,
+                        label: "Idade",
+                        keyboardType: TextInputType.number,
+                        error: errorAge,
+                        onChange: (_) => validatedForm(),
                       ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        flex: 2,
-                        child: CustomStringDropdown(
-                          value: selectedRole,
-                          label: "Cargo",
-                          items: employeeCubit.positions,
-                          onChanged: (value) {
-                            selectedRole = value;
-                            validatedForm();
-                          },
-                        ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 2,
+                      child: CustomStringDropdown(
+                        value: selectedRole,
+                        label: "Cargo",
+                        items: employeeCubit.positions,
+                        onChanged: (value) {
+                          selectedRole = value;
+                          validatedForm();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomTextField(
                   controller: address,
                   label: "Endereço",
                   error: errorAddress,
-                  onChange: (c) {
-                    validatedForm();
-                  },
+                  onChange: (_) => validatedForm(),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomTextField(
                   controller: salary,
                   label: "Salário",
                   keyboardType: TextInputType.number,
                   inputFormatters: [CustomMoneyFormatter()],
                   error: errorSalary,
-                  onChange: (c) {
-                    validatedForm();
-                  },
+                  onChange: (_) => validatedForm(),
                 ),
-                SizedBox(height: 20),
-
+                const SizedBox(height: 20),
                 InkWell(
                   onTap: isValid
-                      ? () async {
+                      ? () {
                           setModel();
-                          registerEmployee();
+                          saveEmployee();
                         }
-                      : () {},
+                      : null,
                   child: Container(
                     height: 55,
                     width: double.infinity,
@@ -213,7 +241,7 @@ class _EmployeesRegisterFormState extends State<EmployeesRegisterForm> {
                               size: 40,
                             )
                           : Text(
-                              'Registrar',
+                              isEditing ? 'Salvar' : 'Registrar',
                               style: AppTextStyle.bold.medium.copyWith(
                                 color: AppColors.background,
                               ),

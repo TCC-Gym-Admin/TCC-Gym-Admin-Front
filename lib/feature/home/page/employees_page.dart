@@ -8,6 +8,7 @@ import 'package:tcc_gym_admin_front/core/utils/custom_mask.dart';
 import 'package:tcc_gym_admin_front/core/utils/validators.dart';
 import 'package:tcc_gym_admin_front/core/widget/label_card.dart';
 import 'package:tcc_gym_admin_front/core/widget/swipe_card.dart';
+import 'package:tcc_gym_admin_front/feature/employees/models/employees_model.dart';
 import 'package:tcc_gym_admin_front/feature/home/cubit/home_cubit.dart';
 import 'package:tcc_gym_admin_front/feature/home/cubit/home_state.dart';
 
@@ -51,90 +52,105 @@ class _EmployeesPageState extends State<EmployeesPage> {
           itemCount: state.employee.length,
           itemBuilder: (context, index) {
             final employee = state.employee[index];
-            return SwipeCard(
-              onDismissed: () async {
-                await cubit.deleteEmployees(employee.id.toString());
+            return GestureDetector(
+              onTap: () {
+                final employee = EmployeesModel(
+                  address: 'aaaa',
+                  age: 14,
+                  document: '1112223334447',
+                  fullname: 'Luizinho',
+                  salary: 3.7000,
+                );
+                Modular.to.pushNamed('/employees', arguments: employee);
               },
-              keyIndex: state.employee[index].document.toString(),
-              child: Container(
-                height: 180,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.bannerCard,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          employeePosition(state.employee[index].role ?? ''),
-                          style: AppTextStyle.bold.small.copyWith(
-                            color: AppColors.background,
+              child: SwipeCard(
+                onDismissed: () async {
+                  await cubit.deleteEmployees(employee.id.toString());
+                },
+                keyIndex: state.employee[index].document.toString(),
+                child: Container(
+                  height: 180,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.bannerCard,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            employeePosition(state.employee[index].role ?? ''),
+                            style: AppTextStyle.bold.small.copyWith(
+                              color: AppColors.background,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: Container(
-                        height: 180,
-                        decoration: BoxDecoration(
-                          color: AppColors.backgroundSecundary,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10.0,
-                            horizontal: 20,
+                      Expanded(
+                        flex: 7,
+                        child: Container(
+                          height: 180,
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundSecundary,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Column(
-                            mainAxisAlignment: .center,
-                            crossAxisAlignment: .start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: .spaceBetween,
-                                children: [
-                                  LabelCard(
-                                    label: 'Nome',
-                                    value: state.employee[index].fullname
-                                        .toString(),
-                                  ),
-                                  LabelCard(
-                                    label: 'Idade',
-                                    value: state.employee[index].age.toString(),
-                                  ),
-                                  LabelCard(
-                                    label: 'CPF',
-                                    value: CpfInputFormatter().formatCpf(
-                                      state.employee[index].document.toString(),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal: 20,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: .center,
+                              crossAxisAlignment: .start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: .spaceBetween,
+                                  children: [
+                                    LabelCard(
+                                      label: 'Nome',
+                                      value: state.employee[index].fullname
+                                          .toString(),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 30),
+                                    LabelCard(
+                                      label: 'Idade',
+                                      value: state.employee[index].age
+                                          .toString(),
+                                    ),
+                                    LabelCard(
+                                      label: 'CPF',
+                                      value: CpfInputFormatter().formatCpf(
+                                        state.employee[index].document
+                                            .toString(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 30),
 
-                              Row(
-                                mainAxisAlignment: .spaceBetween,
-                                children: [
-                                  LabelCard(
-                                    label: 'Endereço',
-                                    value: state.employee[index].address ?? '',
-                                  ),
-                                  LabelCard(
-                                    label: 'Salário',
-                                    value: CustomMask.realMask(
-                                      state.employee[index].salary ?? 0.0,
+                                Row(
+                                  mainAxisAlignment: .spaceBetween,
+                                  children: [
+                                    LabelCard(
+                                      label: 'Endereço',
+                                      value:
+                                          state.employee[index].address ?? '',
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    LabelCard(
+                                      label: 'Salário',
+                                      value: CustomMask.realMask(
+                                        state.employee[index].salary ?? 0.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
